@@ -33,32 +33,32 @@ def Korean_tokenizer(x):
 
         return result  # 온전한 문장을 반환
 
-    df = pd.read_csv("/home/team012/LJH/NMT4-20/data/korean.csv", encoding='cp949', error_bad_lines=False)
+    df = pd.read_csv("/home/team012/LJH/NMT-GPU/data/korean.csv", encoding='cp949', error_bad_lines=False)
     KOR_data = df['Korean']
 
-    f = open("/home/team012/LJH/NMT4-20/data/kor_no_josa.txt", "w")
+    f = open("/home/team012/LJH/NMT-GPU/data/kor_no_josa.txt", "w")
     for row in KOR_data[:100000]:
         f.write(remove_josa(row))  # 조사 제거한 문장 저장
         f.write('\n')
     f.close()
 
-    spm.SentencePieceTrainer.Train('--input=/home/team012/LJH/NMT4-20/data/kor_no_josa.txt \
-                               --model_prefix=/home/team012/LJH/NMT4-20/data/korean_tok \
+    spm.SentencePieceTrainer.Train('--input=/home/team012/LJH/NMT-GPU/data/kor_no_josa.txt \
+                               --model_prefix=/home/team012/LJH/NMT-GPU/data/korean_tok \
                                --vocab_size=100000 \
                                --hard_vocab_limit=false')
 
 
 def English_tokenizer(x):
-    df = pd.read_csv("/home/team012/LJH/NMT4-20/data/english.csv", encoding='cp949', error_bad_lines=False)
+    df = pd.read_csv("/home/team012/LJH/NMT-GPU/data/english.csv", encoding='cp949', error_bad_lines=False)
     ENG_data = df['English']
 
-    f = open("/home/team012/LJH/NMT4-20/data/eng.txt", "w")
+    f = open("/home/team012/LJH/NMT-GPU/data/eng.txt", "w")
     for row in ENG_data[:100000]:
         f.write(row)
         f.write('\n')
     f.close()
 
-    spm.SentencePieceTrainer.Train('--input=/home/team012/LJH/NMT4-20/data/eng.txt \
-                               --model_prefix=/home/team012/LJH/NMT4-20/data/english_tok \
+    spm.SentencePieceTrainer.Train('--input=/home/team012/LJH/NMT-GPU/data/eng.txt \
+                               --model_prefix=/home/team012/LJH/NMT-GPU/data/english_tok \
                                --vocab_size=100000\
                                --hard_vocab_limit=false')
